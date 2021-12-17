@@ -15,6 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.meta.Damageable;
 
 import java.util.*;
@@ -30,7 +31,14 @@ public class FlintAndSteelListener implements Listener {
 		for (Iterator<Recipe> iterator = Bukkit.recipeIterator(); iterator.hasNext(); ) {
 			recipe = iterator.next();
 			if (recipe instanceof FurnaceRecipe) {
-				recipes.put(((FurnaceRecipe) recipe).getInput().getType(), (FurnaceRecipe) recipe);
+				FurnaceRecipe fr = (FurnaceRecipe) recipe;
+				if (fr.getInputChoice() instanceof RecipeChoice.MaterialChoice) {
+					RecipeChoice.MaterialChoice choice = (RecipeChoice.MaterialChoice) fr.getInputChoice();
+					for (Material m : choice.getChoices()) {
+						recipes.put(m, fr);
+					}
+				}
+				recipes.put(fr.getInput().getType(), fr);
 			}
 		}
 	}
