@@ -31,11 +31,6 @@ public class FlintAndSteelListener implements Listener {
 			recipe = iterator.next();
 			if (recipe instanceof FurnaceRecipe) {
 				recipes.put(((FurnaceRecipe) recipe).getInput().getType(), (FurnaceRecipe) recipe);
-				FurnaceRecipe fr = ((FurnaceRecipe) recipe);
-				if (fr.getInput().getType() == Material.SAND) {
-					Bukkit.broadcast(String.format("%s %s %s %s", fr.getInput(), fr.getCookingTime(), fr.getResult(),
-							fr.getInputChoice()), "");
-				}
 			}
 		}
 	}
@@ -87,10 +82,8 @@ public class FlintAndSteelListener implements Listener {
 			boolean used = false;
 			for (Item itemEntity : prevItems) {
 				ItemStack item = itemEntity.getItemStack();
-				event.getPlayer().sendMessage(item.toString());
 				if (recipes.containsKey(item.getType())) {
 					FurnaceRecipe recipe = recipes.get(item.getType());
-					event.getPlayer().sendMessage("YYYY" + recipe);
 					used = true;
 					itemEntity.setItemStack(recipe.getResult());
 					int amount = item.getAmount();
