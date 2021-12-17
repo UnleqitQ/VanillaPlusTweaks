@@ -4,15 +4,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class VanillaPlusTweaks extends JavaPlugin {
 	
+	private static VanillaPlusTweaks instance;
+	
+	public VanillaPlusTweaks() {
+		instance = this;
+	}
+	
 	@Override
 	public void onEnable() {
-		// Plugin startup logic
-		
+	
 	}
 	
 	@Override
 	public void onDisable() {
-		// Plugin shutdown logic
+	
+	}
+	
+	public static VanillaPlusTweaks getInstance() {
+		return instance;
 	}
 	
 }
