@@ -3,7 +3,7 @@ package me.unleqitq.vanillaplustweaks.listeners;
 import me.unleqitq.vanillaplustweaks.VanillaPlusTweaks;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
@@ -84,7 +84,7 @@ public class FlintAndSteelListener implements Listener {
 		Random rnd = VanillaPlusTweaks.getInstance().getRandom();
 		ItemStack mainHand = event.getPlayer().getInventory().getItemInMainHand();
 		ItemStack offHand = event.getPlayer().getInventory().getItemInOffHand();
-		Block block = event.getBlock();
+		BlockState block = event.getBlockState();
 		List<Item> prevItems = event.getItems();
 		if (offHand.getType() == Material.FLINT_AND_STEEL) {
 			boolean used = false;
