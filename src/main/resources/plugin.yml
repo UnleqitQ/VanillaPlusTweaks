@@ -1,4 +1,4 @@
-name: Vanilla Plus Tweaks
+name: VanillaPlusTweaks
 version: '${project.version}'
 main: me.unleqitq.vanillaplustweaks.VanillaPlusTweaks
 api-version: 1.17
