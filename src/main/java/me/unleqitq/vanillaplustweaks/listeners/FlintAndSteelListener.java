@@ -17,7 +17,7 @@ public class FlintAndSteelListener implements Listener {
 		event.getPlayer().sendMessage("Action:        " + event.getAction(), "EventName:     " + event.getEventName(),
 				"BlockFace:     " + event.getBlockFace(), "Clicked Block: " + event.getClickedBlock(),
 				"Hand:          " + event.getHand(), "Item:          " + event.getItem(),
-				"Material:      " + event.getMaterial());
+				"Material:      " + event.getMaterial(), "", "");
 	}
 	
 }
