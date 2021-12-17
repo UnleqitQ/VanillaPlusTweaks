@@ -2,6 +2,7 @@ package me.unleqitq.vanillaplustweaks;
 
 import me.unleqitq.vanillaplustweaks.listeners.FlintAndSteelListener;
 import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Random;
@@ -23,6 +24,7 @@ public final class VanillaPlusTweaks extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
+		HandlerList.unregisterAll(this);
 	}
 	
 	public static VanillaPlusTweaks getInstance() {
