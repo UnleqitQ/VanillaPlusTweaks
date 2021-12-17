@@ -4,3 +4,11 @@ main: me.unleqitq.vanillaplustweaks.VanillaPlusTweaks
 api-version: 1.17
 load: STARTUP
 authors: [ UnleqitQ, Banenchen ]
+commands:
+  vanillaplustweaks:
+    description: Reload Vanilla Plus Tweaks
+    permission: vpt.admin.reload
+permissions:
+  vpt.admin.reload:
+    description: Reload the plugin
+    default: op
