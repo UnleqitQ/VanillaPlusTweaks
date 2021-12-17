@@ -3,7 +3,7 @@ version: '${project.version}'
 main: me.unleqitq.vanillaplustweaks.VanillaPlusTweaks
 api-version: 1.17
 load: STARTUP
-authors: [ UnleqitQ, Banenchen ]
+authors: [ UnleqitQ ]
 commands:
   vanillaplustweaks:
     description: Reload Vanilla Plus Tweaks
