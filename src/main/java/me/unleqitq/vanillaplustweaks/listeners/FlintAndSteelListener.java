@@ -3,13 +3,15 @@ package me.unleqitq.vanillaplustweaks.listeners;
 import me.unleqitq.vanillaplustweaks.VanillaPlusTweaks;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerHarvestBlockEvent;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -19,7 +21,7 @@ import java.util.*;
 
 public class FlintAndSteelListener implements Listener {
 	
-	Map<ItemStack, FurnaceRecipe> recipes;
+	Map<Material, FurnaceRecipe> recipes;
 	
 	public FlintAndSteelListener() {
 		Bukkit.getPluginManager().registerEvents(this, VanillaPlusTweaks.getInstance());
@@ -28,7 +30,12 @@ public class FlintAndSteelListener implements Listener {
 		for (Iterator<Recipe> iterator = Bukkit.recipeIterator(); iterator.hasNext(); ) {
 			recipe = iterator.next();
 			if (recipe instanceof FurnaceRecipe) {
-				recipes.put(((FurnaceRecipe) recipe).getInput(), (FurnaceRecipe) recipe);
+				recipes.put(((FurnaceRecipe) recipe).getInput().getType(), (FurnaceRecipe) recipe);
+				FurnaceRecipe fr = ((FurnaceRecipe) recipe);
+				if (fr.getInput().getType() == Material.SAND) {
+					Bukkit.broadcast(String.format("%s %s %s %s", fr.getInput(), fr.getCookingTime(), fr.getResult(),
+							fr.getInputChoice()), "");
+				}
 			}
 		}
 	}
@@ -70,21 +77,39 @@ public class FlintAndSteelListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onBreak(PlayerHarvestBlockEvent event) {
+	public void onBreak(BlockDropItemEvent event) {
+		Random rnd = VanillaPlusTweaks.getInstance().getRandom();
+		ItemStack mainHand = event.getPlayer().getInventory().getItemInMainHand();
 		ItemStack offHand = event.getPlayer().getInventory().getItemInOffHand();
-		//Block block = event.getHarvestedBlock();
-		List<ItemStack> prevItems = event.getItemsHarvested();
-		List<ItemStack> items = new ArrayList<>();
+		Block block = event.getBlock();
+		List<Item> prevItems = event.getItems();
 		if (offHand.getType() == Material.FLINT_AND_STEEL) {
 			boolean used = false;
-			for (ItemStack item : prevItems) {
-				if (recipes.containsKey(item)) {
-					Recipe recipe = recipes.get(item);
+			for (Item itemEntity : prevItems) {
+				ItemStack item = itemEntity.getItemStack();
+				event.getPlayer().sendMessage(item.toString());
+				if (recipes.containsKey(item.getType())) {
+					FurnaceRecipe recipe = recipes.get(item.getType());
+					event.getPlayer().sendMessage("YYYY" + recipe);
 					used = true;
-					items.add(recipe.getResult());
-				}
-				else {
-					items.add(item);
+					itemEntity.setItemStack(recipe.getResult());
+					int amount = item.getAmount();
+					if (item.getType() == block.getType()) {
+						if (mainHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) > 0) {
+							int amount0 = amount;
+							int level = mainHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
+							amount = 0;
+							for (int i = 0; i < amount0; i++) {
+								if (rnd.nextFloat() < 2 / (2 + (float) level)) {
+									amount += rnd.nextInt(level) + 2;
+								}
+								else
+									amount++;
+							}
+						}
+					}
+					itemEntity.getItemStack().setAmount(
+							amount / recipe.getInput().getAmount() * recipe.getResult().getAmount());
 				}
 			}
 			if (used) {
@@ -96,8 +121,6 @@ public class FlintAndSteelListener implements Listener {
 							meta.setDamage(meta.getDamage() + 1);
 							offHand.setItemMeta(meta);
 						}
-						event.getItemsHarvested().clear();
-						event.getItemsHarvested().addAll(items);
 					}
 				}
 			}
