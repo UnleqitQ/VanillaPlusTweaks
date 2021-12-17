@@ -7,12 +7,10 @@ public final class VanillaPlusTweaks extends JavaPlugin {
 	
 	private static VanillaPlusTweaks instance;
 	
-	public VanillaPlusTweaks() {
-		instance = this;
-	}
 	
 	@Override
 	public void onEnable() {
+		instance = this;
 		new VanillaPlusTweaks();
 	}
 	
