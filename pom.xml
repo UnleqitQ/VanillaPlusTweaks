@@ -9,7 +9,7 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Vanilla Plus Tweaks</name>
+    <name>VanillaPlusTweaks</name>
 
     <properties>
         <java.version>1.8</java.version>
