@@ -1,5 +1,6 @@
 package me.unleqitq.vanillaplustweaks.listeners;
 
+import me.unleqitq.vanillaplustweaks.Configuration;
 import me.unleqitq.vanillaplustweaks.VanillaPlusTweaks;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -45,6 +46,8 @@ public class FlintAndSteelListener implements Listener {
 	
 	@EventHandler
 	public void onHit(EntityDamageByEntityEvent event) {
+		if (!Configuration.FlintAndSteel.enable() || !Configuration.FlintAndSteel.HitEntityIgnite.enable())
+			return;
 		if (event.getDamager() instanceof Player) {
 			Player player = (Player) event.getDamager();
 			ItemStack item = player.getInventory().getItemInMainHand();
@@ -56,7 +59,8 @@ public class FlintAndSteelListener implements Listener {
 						meta.setDamage(meta.getDamage() + 1);
 						item.setItemMeta(meta);
 					}
-					event.getEntity().setFireTicks(event.getEntity().getFireTicks() + 40);
+					event.getEntity().setFireTicks(
+							event.getEntity().getFireTicks() + Configuration.FlintAndSteel.HitEntityIgnite.ticks());
 				}
 			}
 		}
@@ -81,6 +85,8 @@ public class FlintAndSteelListener implements Listener {
 	
 	@EventHandler
 	public void onBreak(BlockDropItemEvent event) {
+		if (!Configuration.FlintAndSteel.enable() || !Configuration.FlintAndSteel.SmeltBlocks.enable())
+			return;
 		Random rnd = VanillaPlusTweaks.getInstance().getRandom();
 		ItemStack mainHand = event.getPlayer().getInventory().getItemInMainHand();
 		ItemStack offHand = event.getPlayer().getInventory().getItemInOffHand();
@@ -95,7 +101,7 @@ public class FlintAndSteelListener implements Listener {
 					used = true;
 					itemEntity.setItemStack(recipe.getResult());
 					int amount = item.getAmount();
-					if (item.getType() == block.getType()) {
+					if (Configuration.FlintAndSteel.SmeltBlocks.useFortune() && item.getType() == block.getType()) {
 						if (mainHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) > 0) {
 							int amount0 = amount;
 							int level = mainHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);

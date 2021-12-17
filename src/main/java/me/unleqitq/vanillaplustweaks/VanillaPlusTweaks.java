@@ -20,6 +20,7 @@ public final class VanillaPlusTweaks extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		new FlintAndSteelListener();
+		Configuration.loadConfig();
 	}
 	
 	@Override
