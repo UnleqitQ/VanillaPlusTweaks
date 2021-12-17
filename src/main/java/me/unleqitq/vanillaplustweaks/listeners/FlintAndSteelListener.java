@@ -101,7 +101,7 @@ public class FlintAndSteelListener implements Listener {
 							int level = mainHand.getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS);
 							amount = 0;
 							for (int i = 0; i < amount0; i++) {
-								if (rnd.nextFloat() < 2 / (2 + (float) level)) {
+								if (rnd.nextFloat() > 2 / (2 + (float) level)) {
 									amount += rnd.nextInt(level) + 2;
 								}
 								else
