@@ -1,7 +1,7 @@
 package me.unleqitq.vanillaplustweaks;
 
+import me.unleqitq.vanillaplustweaks.listeners.AutoSeedListener;
 import me.unleqitq.vanillaplustweaks.listeners.FlintAndSteelListener;
-import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,6 +20,7 @@ public final class VanillaPlusTweaks extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		new FlintAndSteelListener();
+		new AutoSeedListener();
 		Configuration.loadConfig();
 	}
 	

@@ -1,12 +1,16 @@
 package me.unleqitq.vanillaplustweaks;
 
+import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -23,11 +27,25 @@ public final class Configuration {
 	}
 	
 	private static void createDefaults() {
-		defaults.put("flintAndSteel.enable", true);
-		defaults.put("flintAndSteel.hitEntityIgnite.enable", true);
-		defaults.put("flintAndSteel.hitEntityIgnite.ticks", 40);
-		defaults.put("flintAndSteel.smeltBlocks.enable", true);
-		defaults.put("flintAndSteel.smeltBlocks.useFortune", true);
+		{
+			defaults.put("flintAndSteel.enable", true);
+			defaults.put("flintAndSteel.hitEntityIgnite.enable", true);
+			defaults.put("flintAndSteel.hitEntityIgnite.ticks", 40);
+			defaults.put("flintAndSteel.smeltBlocks.enable", true);
+			defaults.put("flintAndSteel.smeltBlocks.useFortune", true);
+		}
+		{
+			defaults.put("autoSeed.enable", true);
+			defaults.put("autoSeed.probability", 0.5);
+			{
+				List<String> l = new ArrayList<>();
+				l.add(Material.WHEAT.name());
+				l.add(Material.CARROTS.name());
+				l.add(Material.POTATOES.name());
+				l.add(Material.BEETROOTS.name());
+				defaults.put("autoSeed.types", l);
+			}
+		}
 	}
 	
 	private Configuration() {}
@@ -50,11 +68,6 @@ public final class Configuration {
 		else {
 			Bukkit.getLogger().log(Level.WARNING, "Config not found");
 		}
-		config.addDefault("flintAndSteel.enable", true);
-		config.addDefault("flintAndSteel.hitEntityIgnite.enable", true);
-		config.addDefault("flintAndSteel.hitEntityIgnite.ticks", 40);
-		config.addDefault("flintAndSteel.smeltBlocks.enable", true);
-		config.addDefault("flintAndSteel.smeltBlocks.useFortune", true);
 		addDefaults();
 		if (configFile.exists()) {
 			try {
@@ -135,6 +148,23 @@ public final class Configuration {
 				return Configuration.config.getBoolean("flintAndSteel.smeltBlocks.useFortune");
 			}
 			
+		}
+		
+	}
+	
+	public static final class AutoSeed {
+		
+		public static boolean enable() {
+			return Configuration.config.getBoolean("autoSeed.enable");
+		}
+		
+		public static double probability() {
+			return Configuration.config.getDouble("autoSeed.probability");
+		}
+		
+		@NotNull
+		public static List<String> types() {
+			return Lists.transform(Configuration.config.getStringList("autoSeed.types"), (in) -> in.toUpperCase());
 		}
 		
 	}
