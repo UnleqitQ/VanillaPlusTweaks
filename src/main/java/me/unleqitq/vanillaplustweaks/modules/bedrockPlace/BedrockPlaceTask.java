@@ -1,4 +1,4 @@
-package me.unleqitq.vanillaplustweaks.listeners;
+package me.unleqitq.vanillaplustweaks.modules.bedrockPlace;
 
 import me.unleqitq.vanillaplustweaks.Configuration;
 import me.unleqitq.vanillaplustweaks.VanillaPlusTweaks;
@@ -21,11 +21,11 @@ import org.bukkit.inventory.meta.Damageable;
 
 import java.util.*;
 
-public class FlintAndSteelListener implements Listener {
+public class BedrockPlaceTask implements Listener {
 	
 	Map<Material, FurnaceRecipe> recipes;
 	
-	public FlintAndSteelListener() {
+	public BedrockPlaceTask() {
 		Bukkit.getPluginManager().registerEvents(this, VanillaPlusTweaks.getInstance());
 		recipes = new HashMap<>();
 		Recipe recipe;
