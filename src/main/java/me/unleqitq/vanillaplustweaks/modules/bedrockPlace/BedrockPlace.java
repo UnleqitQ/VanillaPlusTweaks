@@ -10,7 +10,6 @@ import io.netty.buffer.Unpooled;
 import me.unleqitq.vanillaplustweaks.Module;
 import me.unleqitq.vanillaplustweaks.VanillaPlusTweaks;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,11 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
@@ -103,7 +98,7 @@ public class BedrockPlace extends Module implements Listener {
 	
 	@EventHandler
 	public void blockPlaceEvent(PlayerInteractEvent e) {
-		if (e.getHand() != EquipmentSlot.HAND)
+		/*if (e.getHand() != EquipmentSlot.HAND)
 			return;
 		if (e.getAction() != Action.RIGHT_CLICK_AIR)
 			return;
@@ -124,7 +119,7 @@ public class BedrockPlace extends Module implements Listener {
 			if (placed && player.getGameMode() != GameMode.CREATIVE && !plugin.is1_18()) {
 				item.setAmount(item.getAmount() - 1);
 			}
-		}
+		}*/
 	}
 	
 	// NOT IN USE
